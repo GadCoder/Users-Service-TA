@@ -1,4 +1,4 @@
-from src.domain.schemas.user_base import UserBase
+from src.app.domain.schemas.user_base import UserBase
 
 
 class TeacherPublic(UserBase):
