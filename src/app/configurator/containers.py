@@ -22,7 +22,7 @@ class Container(containers.DeclarativeContainer):
     SQLAlchemyInstrumentor().instrument(
         engine=ENGINE, enable_commenter=True, commenter_options={}
     )
-    DEFAULT_SESSION_FACTORY = lambda: sessionmaker(bind=ENGINE)
+    DEFAULT_SESSION_FACTORY = sessionmaker(bind=ENGINE)
 
     student_uow = providers.Singleton(
         StudentDatabaseUnitOfWork, session_factory=DEFAULT_SESSION_FACTORY
