@@ -1,0 +1,10 @@
+[project]
+name = "users-service-ta"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi[all]>=0.115.5",
+    "sqlmodel>=0.0.22",
+]
