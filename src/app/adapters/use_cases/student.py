@@ -5,10 +5,10 @@ from src.app.domain.ports.common.responses import (
     ResponseSuccess,
     ResponseTypes,
 )
-from src.app.domain.ports.unit_of_works.students import StudentUnitOfWorkInterface
-from src.app.domain.ports.use_cases.students import StudentServiceInterface
-from src.app.domain.schemas import student as student_schema
 from src.app.domain.models.student import Student
+from src.app.domain.schemas import student as student_schema
+from src.app.domain.ports.use_cases.student import StudentServiceInterface
+from src.app.domain.ports.unit_of_works.student import StudentUnitOfWorkInterface
 
 
 class StudentService(StudentServiceInterface):
@@ -39,7 +39,8 @@ class StudentService(StudentServiceInterface):
                     last_names=student_.last_names,
                     email=student_.email,
                     picture_url=student_.picture_url,
-                    student_code=student_.student_code
+                    student_code=student_.student_code,
+                    is_active=student_.is_active
                 )
                 return ResponseSuccess(student_output)
         except Exception as e:

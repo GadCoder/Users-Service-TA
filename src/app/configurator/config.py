@@ -8,7 +8,7 @@ load_dotenv(dotenv_path=env_path)
 
 
 class Settings:
-    PROJECT_NAME: str = "Tutoring Platform"
+    PROJECT_NAME: str = "Tutoring Platform - Users Microservice"
     PROJECT_VERSION: str = "1.0.0"
 
     USE_SQLITE_DB: str = os.getenv("USE_SQLITE_DB")

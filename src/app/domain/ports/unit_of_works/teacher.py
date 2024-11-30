@@ -1,12 +1,12 @@
 import abc
 
-from src.app.domain.ports.repositories.students import StudentRepositoryInterface
+from src.app.domain.ports.repositories.teacher import TeacherRepositoryInterface
 
 
-class StudentUnitOfWorkInterface(abc.ABC):
-    students: StudentRepositoryInterface
+class TeacherUnitOfWorkInterface(abc.ABC):
+    teachers: TeacherRepositoryInterface
 
-    def __enter__(self) -> "StudentUnitOfWorkInterface":
+    def __enter__(self) -> "TeacherUnitOfWorkInterface":
         return self
 
     def __exit__(self, *args):

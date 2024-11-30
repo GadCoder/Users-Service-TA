@@ -1,6 +1,6 @@
-from src.app.domain.ports.repositories.students import StudentRepositoryInterface
-from src.app.domain.schemas import student as student_schema
 from src.app.domain.models.student import Student
+from src.app.domain.schemas import student as student_schema
+from src.app.domain.ports.repositories.student import StudentRepositoryInterface
 
 
 class StudentDatabaseRepository(StudentRepositoryInterface):
