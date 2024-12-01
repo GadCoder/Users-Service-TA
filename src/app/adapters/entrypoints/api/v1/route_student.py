@@ -23,6 +23,7 @@ def create_user(
         student_service: StudentServiceInterface = Depends(Provide[Container.student_service]),
 ):
     if current_user.is_super_user:
+        print(f"SUPERUSER ON CREATE STUDENT")
         response = student_service.create(student=student)
         data = jsonable_encoder(response.value)
         return Response(
