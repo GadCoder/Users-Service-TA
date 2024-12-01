@@ -9,9 +9,9 @@ from src.app.adapters.use_cases.user import UserService
 from src.app.adapters.unit_of_works.student import StudentDatabaseUnitOfWork
 from src.app.adapters.unit_of_works.user import UserDatabaseUnitOfWork
 
-ENGINE = create_engine(url=
-                       config.get_database_uri()
-                       )
+URL = config.get_database_uri()
+print(f"URL: {URL}")
+ENGINE = create_engine(url=URL)
 
 
 def get_default_session_factory():
