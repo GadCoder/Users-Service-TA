@@ -1,5 +1,4 @@
 import abc
-import uuid
 
 from src.app.domain.schemas import user as user_schema
 

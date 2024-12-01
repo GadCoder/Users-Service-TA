@@ -1,4 +1,3 @@
-import uuid
 from typing import Union
 
 from src.app.configurator.common.hashing import Hasher
@@ -8,10 +7,10 @@ from src.app.domain.ports.common.responses import (
     ResponseTypes,
 )
 from src.app.domain.models.user import User
+from src.app.domain.schemas.user import UserPublic
 from src.app.domain.schemas import user as user_schema
 from src.app.domain.ports.use_cases.user import UserServiceInterface
 from src.app.domain.ports.unit_of_works.user import UserUnitOfWorkInterface
-from src.app.domain.schemas.user import UserPublic
 from src.app.domain.schemas.user_base import UserLoginInput, UserLoginOutput
 
 
