@@ -17,10 +17,20 @@ class StudentRepositoryInterface(abc.ABC):
             self.seen.add(hash(student.student_code))
         return student
 
+    def get_by_email(self, email: str) -> student_schema.StudentPublic:
+        student = self._get_by_email(email)
+        if student:
+            self.seen.add(hash(student.student_code))
+        return student
+
     @abc.abstractmethod
     def _add(self, student: student_schema.StudentCreate):
         raise NotImplementedError
 
     @abc.abstractmethod
     def _get_by_code(self, code: str) -> student_schema.StudentPublic:
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def _get_by_email(self, email: str) -> student_schema.StudentPublic:
         raise NotImplementedError

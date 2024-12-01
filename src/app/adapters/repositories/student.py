@@ -13,3 +13,6 @@ class StudentDatabaseRepository(StudentRepositoryInterface):
 
     def _get_by_code(self, code: str) -> student_schema.StudentPublic:
         return self.session.query(Student).filter(Student.student_code == code).first()
+
+    def _get_by_email(self, email: str) -> student_schema.StudentPublic:
+        return self.session.query(Student).filter(Student.email == email).first()

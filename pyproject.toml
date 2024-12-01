@@ -11,7 +11,9 @@ dependencies = [
     "fastapi[all]>=0.115.5",
     "opentelemetry-instrumentation-fastapi>=0.49b2",
     "opentelemetry-instrumentation-sqlalchemy>=0.49b2",
+    "passlib>=1.7.4",
     "pymysql>=1.1.1",
     "pytest>=8.3.3",
+    "python-jose>=3.3.0",
     "sqlmodel>=0.0.22",
 ]

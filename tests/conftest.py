@@ -47,19 +47,9 @@ def get_teacher_model_dict():
         "last_names": "Jinn",
         "email": "qui-gon.jinn@unmsm.edu.pe",
         "picture_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGev6l0BBewv1l3G3PZ2g-X8D9B3oP3uiWy5tGjjmV6d36VPG6Ua4tVVeQH86wlrIrKyg&usqp=CAU",
-        "teacher_code": "20200055",
+        "is_teacher": True,
+        "code": "20200055",
         "password": "hello-there",
-    }
-
-
-@pytest.fixture
-def get_admin_model_dict():
-    return {
-        "names": "Yoda",
-        "last_names": "",
-        "email": "yoda@unmsm.edu.pe",
-        "picture_url": "https://static.wikia.nocookie.net/esstarwars/images/d/d6/Yoda_SWSB.png/revision/latest?cb=20180105191224",
-        "password": "123456",
     }
 
 

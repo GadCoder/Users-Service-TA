@@ -2,17 +2,17 @@ from typing import Any, Callable
 
 from sqlalchemy.orm import Session
 
-from src.app.adapters.repositories.teacher import TeacherDatabaseRepository
-from src.app.domain.ports.unit_of_works.teacher import TeacherUnitOfWorkInterface
+from src.app.adapters.repositories.user import UserDatabaseRepository
+from src.app.domain.ports.unit_of_works.user import UserUnitOfWorkInterface
 
 
-class TeacherDatabaseUnitOfWork(TeacherUnitOfWorkInterface):
+class UserDatabaseUnitOfWork(UserUnitOfWorkInterface):
     def __init__(self, session_factory: Callable[[], Any]):
         self.session_factory = session_factory()
 
     def __enter__(self):
         self.session: Session = self.session_factory()
-        self.teachers = TeacherDatabaseRepository(self.session)
+        self.users = UserDatabaseRepository(self.session)
         return super().__enter__()
 
     def __exit__(self, *args):
