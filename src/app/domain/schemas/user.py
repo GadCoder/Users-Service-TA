@@ -7,6 +7,7 @@ class UserPublic(UserBase):
     id: int
     is_active: bool
     is_teacher: bool
+    picture_url: str | None
     code: str
 
 

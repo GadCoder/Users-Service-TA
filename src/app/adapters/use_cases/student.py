@@ -10,6 +10,7 @@ from src.app.domain.schemas import student as student_schema
 from src.app.domain.ports.use_cases.student import StudentServiceInterface
 from src.app.domain.ports.unit_of_works.student import StudentUnitOfWorkInterface
 from src.app.domain.schemas.student import StudentPublic
+from src.app.adapters.entrypoints.r2_client import r2_client
 
 
 def _handle_response_failure(
@@ -27,18 +28,20 @@ class StudentService(StudentServiceInterface):
     def __init__(self, uow: StudentUnitOfWorkInterface):
         self.uow = uow
 
-    def _create(
+    async def _create(
             self, student: student_schema.StudentCreate
     ) -> Union[ResponseSuccess, ResponseFailure]:
         try:
             with self.uow:
+                picture_url = f"https://www.ta-media.gadsw.dev/media/{student.student_code}.jpg"
                 student_ = self.uow.students.get_by_code(student.student_code)
+                await r2_client.save_photo_on_bucket(student.picture_bytes, student.student_code)
                 if student_ is None:
                     new_student = Student(
                         names=student.names,
                         last_names=student.last_names,
                         email=student.email,
-                        picture_url=student.picture_url,
+                        picture_url=picture_url,
                         student_code=student.student_code,
                         is_superuser=False
                     )
@@ -50,7 +53,7 @@ class StudentService(StudentServiceInterface):
                     names=student_.names,
                     last_names=student_.last_names,
                     email=student_.email,
-                    picture_url=student_.picture_url,
+                    picture_url=picture_url,
                     student_code=student_.student_code,
                     is_active=student_.is_active
                 )
