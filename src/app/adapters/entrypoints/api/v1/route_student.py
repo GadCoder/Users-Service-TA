@@ -18,16 +18,21 @@ router = APIRouter()
 @inject
 async def create_user(
         student: StudentCreate,
-
+        current_user: User = Depends(get_current_user_from_token),
         student_service: StudentServiceInterface = Depends(Provide[Container.student_service]),
 ):
-    print(f"SUPERUSER ON CREATE STUDENT")
-    response = await student_service.create(student=student)
-    data = jsonable_encoder(response.value)
-    return Response(
-        content=json.dumps(data),
-        media_type="application/json",
-        status_code=STATUS_CODES[response.type],
+    if current_user.is_super_user:
+        print(f"SUPERUSER ON CREATE STUDENT")
+        response = await student_service.create(student=student)
+        data = jsonable_encoder(response.value)
+        return Response(
+            content=json.dumps(data),
+            media_type="application/json",
+            status_code=STATUS_CODES[response.type],
+        )
+
+    raise HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED, detail="You are not permitted"
     )
 
 
