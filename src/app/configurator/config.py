@@ -32,6 +32,8 @@ settings = Settings()
 
 
 def get_database_uri() -> str:
+    print(f"USE_SQLITE_DB: {settings.USE_SQLITE_DB}")
+    print(f"MYSQL_HOST: {settings.MYSQL_SERVER}")
     if settings.USE_SQLITE_DB:
         return "sqlite:///./sql_app.db"
     return settings.DATABASE_URL
