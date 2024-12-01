@@ -45,6 +45,9 @@ class UserServiceInterface(abc.ABC):
     def authenticate_user(self, user: UserLoginInput) -> Union[UserLoginOutput, bool]:
         return self._authenticate_user(user)
 
+    def user_is_admin(self, user_email: str) -> Union[ResponseSuccess, ResponseFailure]:
+        return self._user_is_admin(user_email)
+
     @abc.abstractmethod
     def _create(
             self, user: user_schema.UserCreate
@@ -88,4 +91,8 @@ class UserServiceInterface(abc.ABC):
 
     @abc.abstractmethod
     def _authenticate_user(self, user: UserLoginInput) -> Union[UserLoginOutput, bool]:
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def _user_is_admin(self, user_email: str) -> Union[ResponseSuccess, ResponseFailure]:
         raise NotImplementedError

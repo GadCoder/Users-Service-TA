@@ -1,5 +1,5 @@
 import abc
-from typing import Union, Any, Coroutine
+from typing import Union
 
 from src.app.domain.schemas import student as student_schema
 from src.app.domain.ports.unit_of_works.student import StudentUnitOfWorkInterface

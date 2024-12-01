@@ -226,3 +226,10 @@ class UserService(UserServiceInterface):
                 is_active=user_.is_active,
                 is_super_user=user_.is_superuser,
             )
+
+    def _user_is_admin(self, user_email: str) -> Union[ResponseSuccess, ResponseFailure]:
+        with self.uow:
+            user_ = self.uow.users.get_by_email(email=user_email)
+            if user_:
+                return ResponseSuccess(value=user_.is_superuser)
+            return _handle_response_failure(user_email)

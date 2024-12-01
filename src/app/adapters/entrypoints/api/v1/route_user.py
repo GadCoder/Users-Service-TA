@@ -153,3 +153,16 @@ def delete_by_code(id: int,
     raise HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED, detail="You are not permitted"
     )
+
+
+@router.get("/user-is-admin/{user_email}")
+@inject
+def user_is_admin(user_email: str,
+                  user_service: UserServiceInterface = Depends(Provide[Container.user_service])):
+    response = user_service.user_is_admin(user_email=user_email)
+    data = jsonable_encoder(response.value)
+    return Response(
+        content=json.dumps(data),
+        media_type="application/json",
+        status_code=STATUS_CODES[response.type],
+    )
