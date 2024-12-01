@@ -26,12 +26,17 @@ class OAuth2PasswordBearerWithCookie(OAuth2):
 
         scheme, param = get_authorization_scheme_param(authorization)
         if not authorization or scheme.lower() != "bearer":
-            if self.auto_error:
-                raise HTTPException(
-                    status_code=status.HTTP_401_UNAUTHORIZED,
-                    detail="Not authenticated",
-                    headers={"WWW-Authenticate": "Bearer"},
-                )
+            authorization: Optional[str] = request.headers.get("Authorization")
+            scheme, param = get_authorization_scheme_param(authorization)
+            if not authorization or scheme.lower() != "bearer":
+                if self.auto_error:
+                    raise HTTPException(
+                        status_code=status.HTTP_401_UNAUTHORIZED,
+                        detail="Not authenticated",
+                        headers={"WWW-Authenticate": "Bearer"},
+                    )
+                else:
+                    return None
             else:
-                return None
+                return param
         return param
