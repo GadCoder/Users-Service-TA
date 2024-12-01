@@ -11,7 +11,7 @@ class Settings:
     PROJECT_NAME: str = "Tutoring Platform - Users Microservice"
     PROJECT_VERSION: str = "1.0.0"
 
-    USE_SQLITE_DB: str = os.getenv("USE_SQLITE_DB")
+    USE_SQLITE_DB: bool = os.getenv("USE_SQLITE_DB")
     MYSQL_USER: str = os.getenv("MYSQL_USER")
     MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD")
     MYSQL_SERVER: str = os.getenv("MYSQL_SERVER", "localhost")
