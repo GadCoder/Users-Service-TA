@@ -1,6 +1,5 @@
 import os
 from pathlib import Path
-
 from dotenv import load_dotenv
 
 env_path = Path(__file__).parent / ".env"
@@ -11,7 +10,7 @@ class Settings:
     PROJECT_NAME: str = "Tutoring Platform - Users Microservice"
     PROJECT_VERSION: str = "1.0.0"
 
-    USE_SQLITE_DB: bool = bool(os.getenv("USE_SQLITE_DB"))
+    SERVER: str = os.getenv("SERVER", "dev")
     MYSQL_USER: str = os.getenv("MYSQL_USER")
     MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD")
     MYSQL_SERVER: str = os.getenv("MYSQL_SERVER", "localhost")
@@ -32,8 +31,6 @@ settings = Settings()
 
 
 def get_database_uri() -> str:
-    print(f"USE_SQLITE_DB: {settings.USE_SQLITE_DB}")
-    print(f"MYSQL_HOST: {settings.MYSQL_SERVER}")
-    if settings.USE_SQLITE_DB:
+    if settings.SERVER == "dev":
         return "sqlite:///./sql_app.db"
     return settings.DATABASE_URL
