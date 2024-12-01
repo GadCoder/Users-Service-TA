@@ -3,6 +3,7 @@ class ResponseTypes:
     RESOURCE_ERROR = "ResourceError"
     SYSTEM_ERROR = "SystemError"
     SUCCESS = "Success"
+    NOT_FOUND = "NotFound"
 
 
 class ResponseFailure:

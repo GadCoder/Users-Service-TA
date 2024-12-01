@@ -25,3 +25,18 @@ def create_teacher(
         media_type="application/json",
         status_code=STATUS_CODES[response.type],
     )
+
+
+@router.get("/get-by-code/")
+@inject
+def get_by_teacher_code(
+        teacher_code: str,
+        teacher_service: TeacherServiceInterface = Depends(Provide[Container.teacher_service]),
+):
+    response = teacher_service.get_by_code(teacher_code=teacher_code)
+    data = jsonable_encoder(response.value)
+    return Response(
+        content=json.dumps(data),
+        media_type="application/json",
+        status_code=STATUS_CODES[response.type],
+    )

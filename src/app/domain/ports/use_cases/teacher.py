@@ -14,8 +14,15 @@ class TeacherServiceInterface(abc.ABC):
     def create(self, teacher: teacher_schema.TeacherCreate) -> Union[ResponseSuccess, ResponseFailure]:
         return self._create(teacher)
 
+    def get_by_code(self, teacher_code: str) -> Union[ResponseSuccess, ResponseFailure]:
+        return self._get_by_code(teacher_code)
+
     @abc.abstractmethod
     def _create(
             self, user: teacher_schema.TeacherCreate
     ) -> Union[ResponseSuccess, ResponseFailure]:
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def _get_by_code(self, teacher_code: str) -> Union[ResponseSuccess, ResponseFailure]:
         raise NotImplementedError

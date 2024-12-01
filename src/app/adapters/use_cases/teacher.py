@@ -9,6 +9,17 @@ from src.app.domain.models.teacher import Teacher
 from src.app.domain.schemas import teacher as teacher_schema
 from src.app.domain.ports.use_cases.teacher import TeacherServiceInterface
 from src.app.domain.ports.unit_of_works.teacher import TeacherUnitOfWorkInterface
+from src.app.domain.schemas.teacher import TeacherPublic
+
+
+def _handle_response_failure(
+        teacher_code_: str = None, message: dict[str] = None
+) -> ResponseFailure:
+    if message:
+        return ResponseFailure(ResponseTypes.RESOURCE_ERROR, message=message)
+    return ResponseFailure(
+        ResponseTypes.RESOURCE_ERROR,
+        message={"detail": f"Teacher with code code {teacher_code_} not found"})
 
 
 class TeacherService(TeacherServiceInterface):
@@ -46,3 +57,20 @@ class TeacherService(TeacherServiceInterface):
                 return ResponseSuccess(teacher_output)
         except Exception as e:
             return ResponseFailure(ResponseTypes.SYSTEM_ERROR, e)
+
+    def _get_by_code(self, teacher_code: str) -> Union[ResponseSuccess, ResponseFailure]:
+        with self.uow:
+            teacher = self.uow.teachers.get_by_code(code=teacher_code)
+            if teacher:
+                return ResponseSuccess(
+                    TeacherPublic(
+                        id=teacher.id,
+                        names=teacher.names,
+                        last_names=teacher.last_names,
+                        email=teacher.email,
+                        picture_url=teacher.picture_url,
+                        teacher_code=teacher.teacher_code,
+                        is_active=teacher.is_active
+                    )
+                )
+            return _handle_response_failure(teacher_code)
