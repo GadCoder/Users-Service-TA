@@ -1,4 +1,6 @@
 from typing import Union
+from fastapi.security.utils import get_authorization_scheme_param
+from jose import jwt
 
 from src.app.configurator.common.hashing import Hasher
 from src.app.domain.ports.common.responses import (
@@ -6,12 +8,15 @@ from src.app.domain.ports.common.responses import (
     ResponseSuccess,
     ResponseTypes,
 )
+
 from src.app.domain.models.user import User
+from src.app.configurator.config import settings
 from src.app.domain.schemas.user import UserPublic
 from src.app.domain.schemas import user as user_schema
 from src.app.domain.ports.use_cases.user import UserServiceInterface
 from src.app.domain.ports.unit_of_works.user import UserUnitOfWorkInterface
 from src.app.domain.schemas.user_base import UserLoginInput, UserLoginOutput
+from src.app.configurator.config import settings
 
 
 def _handle_response_failure(
@@ -127,7 +132,7 @@ class UserService(UserServiceInterface):
                         is_superuser=user.is_superuser
                     )
                 )
-            return _handle_response_failure(email=email)
+            return _handle_response_failure(user_email=email)
 
     def _update_password(self, user: user_schema.UserUpdatePassword) -> Union[
         ResponseSuccess, ResponseFailure]:
@@ -227,9 +232,22 @@ class UserService(UserServiceInterface):
                 is_super_user=user_.is_superuser,
             )
 
-    def _user_is_admin(self, user_email: str) -> Union[ResponseSuccess, ResponseFailure]:
+    def _user_is_admin(self, auth_token: str) -> Union[ResponseSuccess, ResponseFailure]:
         with self.uow:
+            if "Bearer" in auth_token:
+                scheme, token = get_authorization_scheme_param(auth_token)
+            else:
+                token = auth_token
+            payload = jwt.decode(
+                token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM]
+            )
+            user_email: str = payload.get("sub")
+            if user_email is None:
+                return ResponseFailure(
+                    ResponseTypes.PARAMETERS_ERROR,
+                    message={"detail": "Invalid token"}
+                )
             user_ = self.uow.users.get_by_email(email=user_email)
             if user_:
                 return ResponseSuccess(value=user_.is_superuser)
-            return _handle_response_failure(user_email)
+            return _handle_response_failure(user_email=user_email)

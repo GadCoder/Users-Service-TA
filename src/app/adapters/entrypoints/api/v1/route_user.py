@@ -155,11 +155,11 @@ def delete_by_code(id: int,
     )
 
 
-@router.get("/user-is-admin/{user_email}")
+@router.get("/user-is-admin/{auth_token}")
 @inject
-def user_is_admin(user_email: str,
+def user_is_admin(auth_token: str,
                   user_service: UserServiceInterface = Depends(Provide[Container.user_service])):
-    response = user_service.user_is_admin(user_email=user_email)
+    response = user_service.user_is_admin(auth_token=auth_token)
     data = jsonable_encoder(response.value)
     return Response(
         content=json.dumps(data),
