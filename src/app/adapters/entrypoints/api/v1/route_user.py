@@ -155,7 +155,7 @@ def delete_by_code(id: int,
     )
 
 
-@router.get("/user-is-admin/{auth_token}")
+@router.post("/user-is-admin/")
 @inject
 def user_is_admin(auth_token: str,
                   user_service: UserServiceInterface = Depends(Provide[Container.user_service])):
