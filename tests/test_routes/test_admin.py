@@ -11,8 +11,8 @@ def test_create_admin(app, client, get_fake_container, get_admin_model_dict):
         assert response.json()["names"] == "Yoda"
         assert response.json()["last_names"] == ""
         assert response.json()["email"] == "yoda@unmsm.edu.pe"
-        assert response.json()["is_superuser"] == True
-        assert response.json()["is_active"] == True
+        assert response.json()["is_superuser"]
+        assert response.json()["is_active"]
 
 
 def test_get_admin(app, client, get_fake_container, get_admin_model_dict):

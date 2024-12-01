@@ -10,6 +10,14 @@ from src.app.adapters.unit_of_works.student import StudentDatabaseUnitOfWork
 from src.app.adapters.unit_of_works.teacher import TeacherDatabaseUnitOfWork
 
 
+def get_default_session_factory():
+    return sessionmaker(
+        bind=create_engine(
+            "sqlite:///./test_db.db", connect_args={"check_same_thread": False}
+        )
+    )
+
+
 class Container(containers.DeclarativeContainer):
     wiring_config = containers.WiringConfiguration(
         packages=[
@@ -18,11 +26,7 @@ class Container(containers.DeclarativeContainer):
         ]
     )
 
-    DEFAULT_SESSION_FACTORY = lambda: sessionmaker(
-        bind=create_engine(
-            "sqlite:///./test_db.db", connect_args={"check_same_thread": False}
-        )
-    )
+    DEFAULT_SESSION_FACTORY = get_default_session_factory()
 
     student_uow = providers.Singleton(
         StudentDatabaseUnitOfWork, session_factory=DEFAULT_SESSION_FACTORY

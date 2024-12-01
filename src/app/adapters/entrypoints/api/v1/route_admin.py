@@ -45,7 +45,7 @@ def get_by_admin_code(
 
 @router.get("/get-by-email/")
 @inject
-def get_by_admin_code(
+def get_by_email(
         email: str,
         admin_service: AdminServiceInterface = Depends(Provide[Container.admin_service]),
 ):
