@@ -97,9 +97,9 @@ def update_password(user: UserUpdatePassword,
 
 @router.patch("/update-picture/")
 @inject
-def update_password(user: UserUpdatePicture,
-                    current_user: User = Depends(get_current_user_from_token),
-                    user_service: UserServiceInterface = Depends(Provide[Container.user_service])):
+def update_profile_picture(user: UserUpdatePicture,
+                           current_user: User = Depends(get_current_user_from_token),
+                           user_service: UserServiceInterface = Depends(Provide[Container.user_service])):
     if current_user.is_super_user or current_user.id == user.id:
         response = user_service.update_picture(user=user)
         data = jsonable_encoder(response.value)
@@ -115,9 +115,9 @@ def update_password(user: UserUpdatePicture,
 
 @router.patch("/update-active-status/")
 @inject
-def update_password(user: UserUpdateActiveStatus,
-                    current_user: User = Depends(get_current_user_from_token),
-                    user_service: UserServiceInterface = Depends(Provide[Container.user_service])):
+def update_active_status(user: UserUpdateActiveStatus,
+                         current_user: User = Depends(get_current_user_from_token),
+                         user_service: UserServiceInterface = Depends(Provide[Container.user_service])):
     if current_user.is_super_user:
         response = user_service.update_active_status(user=user)
         data = jsonable_encoder(response.value)

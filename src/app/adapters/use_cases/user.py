@@ -97,9 +97,7 @@ class UserService(UserServiceInterface):
     def _get_by_code(self, code: str) -> Union[ResponseSuccess, ResponseFailure]:
         with self.uow:
             user = self.uow.users.get_by_code(code=code)
-            print(f"USER: {user}")
             if user:
-                print(f"ON CONDITIONAL")
                 return ResponseSuccess(
                     UserPublic(
                         id=user.id,
@@ -138,7 +136,6 @@ class UserService(UserServiceInterface):
             user_ = self.uow.users.get_by_id(id=user.id)
             if not user:
                 return _handle_response_failure(user.id)
-            print(f"existing_password: {user.existing_password}")
             if not Hasher.verify_password(user.existing_password, user_.hashed_password):
                 return _handle_response_failure(message="The existing password is incorrect")
             new_hashed_password = Hasher.get_password_hash(user.new_password)

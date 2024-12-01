@@ -1,5 +1,6 @@
+from sqlmodel import SQLModel
+
 from src.app.domain.schemas.user_base import UserBase
-from sqlmodel import SQLModel, Field
 
 
 class UserPublic(UserBase):
