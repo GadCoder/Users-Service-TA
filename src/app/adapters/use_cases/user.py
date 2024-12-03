@@ -128,6 +128,7 @@ class UserService(UserServiceInterface):
                         email=user.email,
                         picture_url=user.picture_url,
                         code=user.code,
+                        is_teacher=user.is_teacher,
                         is_active=user.is_active,
                         is_superuser=user.is_superuser
                     )
